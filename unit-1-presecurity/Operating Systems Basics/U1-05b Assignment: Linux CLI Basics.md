@@ -21,9 +21,9 @@ $ whoami
 
 Output:
 
-
+```
 varia
-
+```
 
 Answer: I am logged in as the user varia.
 
@@ -52,15 +52,15 @@ Answer: Yes. I am a member of the sudo group because sudo appears in the list of
 
 Command:
 
-
+```
 $ uname -a
-
+```
 
 Output:
 
-
+```
 Linux debian-lab 6.12.107+deb13-arm64 #1 SMP Debian 6.12.107-1 (2026-08-29) aarch64 GNU/Linux
-
+```
 
 Answer: The system is running Linux kernel 6.12.107+deb13-arm64.
 
@@ -70,16 +70,16 @@ Answer: The system is running Linux kernel 6.12.107+deb13-arm64.
 
 Commands:
 
-
+```
 $ whatis whoami
 $ man whoami
-
+```
 
 Output from whatis:
 
-
+```
 whoami (1) - print effective user name
-
+```
 
 Answer: whatis gives a very short, one-line description of the command. man provides a much more detailed manual page, including the command's purpose, syntax, description, options, and other information.
 
@@ -100,7 +100,7 @@ Answer:
 
 Commands:
 
-
+```
 $ cd /etc
 $ pwd
 $ cd ..
@@ -109,7 +109,7 @@ $ cd /var/log
 $ pwd
 $ cd -
 $ pwd
-
+```
 
 Answer: cd - switches back to the previous working directory. It is useful for quickly moving between the current directory and the directory visited immediately before it.
 
@@ -119,16 +119,16 @@ Answer: cd - switches back to the previous working directory. It is useful for q
 
 Command:
 
-
+```
 $ ls -l /etc
-
+```
 
 Output (excerpt):
 
-
+```
 -rw-r--r--  1 root root  3028 Mar 12 09:14 adduser.conf
 drwxr-xr-x  2 root root  4096 Oct 21 14:02 apt
-
+```
 
 Answer: -l shows the long format — permissions, link count, owner, group, size, modification date, and name.
 
@@ -138,9 +138,9 @@ Answer: -l shows the long format — permissions, link count, owner, group, size
 
 Command:
 
-
+```
 $ ls -la /etc
-
+```
 
 Answer: -a shows hidden files and directories that are normally omitted by ls.
 
@@ -157,15 +157,15 @@ Examples include:
 
 Command:
 
-
+```
 $ ls -lh /var/log
-
+```
 
 Output:
 
-
+```
 -rw-r--r--  1 root root 786K Sep  5 13:57 dpkg.log
-
+```
 
 Answer: The largest regular file shown in /var/log is dpkg.log, with a size of approximately 786K.
 
@@ -175,17 +175,17 @@ Answer: The largest regular file shown in /var/log is dpkg.log, with a size of a
 
 Command:
 
-
+```
 $ ls -lt /var/log
-
+```
 
 Output (top entries):
 
-
+```
 -rw-r--r--  1 root root 804285 Sep  5 13:57 dpkg.log
 drwxr-xr-x  2 root root   4096 Sep  5 13:57 apt
 -rw-r--r--  1 root root  46882 Sep  5 13:57 alternatives.log
-
+```
 
 Answer: The most recently modified items were dpkg.log, the apt directory, and alternatives.log, all modified at 13:57 on September 5.
 
@@ -197,14 +197,14 @@ Answer: The most recently modified items were dpkg.log, the apt directory, and a
 
 Command:
 
-
+```
 $ mkdir -p ~/cyber-course/unit1
 $ mkdir -p ~/cyber-course/unit2
 $ mkdir -p ~/cyber-course/unit3/osint
 $ mkdir -p ~/cyber-course/unit3/recon
 $ mkdir -p ~/cyber-course/unit3/crypto
 $ mkdir -p ~/cyber-course/scratch
-
+```
 
 Answer: The directory structure was created under ~/cyber-course/, including unit1, unit2, unit3/osint, unit3/recon, unit3/crypto, and scratch.
 
@@ -223,9 +223,9 @@ Answer:
 
 Command:
 
-
+```
 $ rmdir ~/cyber-course/scratch/
-
+```
 
 Answer: rmdir fails when the directory is not empty. In this task, scratch/ contained files, so it could not be removed with rmdir.
 
@@ -243,20 +243,20 @@ $ rm -r ~/cyber-course/scratch/
 
 Command:
 
-
+```
 $ cat /etc/os-release
-
+```
 
 Output:
 
-
+```
 PRETTY_NAME="Debian GNU/Linux 13 (trixie)"
 NAME="Debian GNU/Linux"
 VERSION_ID="13"
 VERSION="13 (trixie)"
 DEBIAN_VERSION_FULL=13.6
 ID=debian
-
+```
 
 Answer: The system is running Debian GNU/Linux 13 (trixie).
 
@@ -266,15 +266,15 @@ Answer: The system is running Debian GNU/Linux 13 (trixie).
 
 Command:
 
-
+```
 $ sudo tail -n 10 /var/log/syslog
-
+```
 
 Output:
 
-
+```
 tail: cannot open '/var/log/syslog' for reading: No such file or directory
-
+```
 
 Answer: No messages could be displayed because /var/log/syslog does not exist on this system.
 
@@ -286,14 +286,14 @@ $ sudo journalctl -n 10
 
 Output (excerpt):
 
+```
+Sep 09 14:17:01 debian-lab CRON[3826]: (root) CMD ...
+Sep 09 14:17:35 debian-lab sudo[3828]: varia : TTY=pts/0 ...
+Sep 09 14:18:13 debian-lab sudo[3835]: varia : TTY=pts/0 ...
+Sep 09 14:18:49 debian-lab sudo[3842]: varia : TTY=pts/0 ...
 
-Sep 05 14:17:01 debian-lab CRON[3826]: (root) CMD ...
-Sep 05 14:17:35 debian-lab sudo[3828]: varia : TTY=pts/0 ...
-Sep 05 14:18:13 debian-lab sudo[3835]: varia : TTY=pts/0 ...
-Sep 05 14:18:49 debian-lab sudo[3842]: varia : TTY=pts/0 ...
 
-
-Answer: The messages include CRON activity and sudo session messages. They are recent, from September 5, 2026.
+Answer: The messages include CRON activity and sudo session messages. They are recent, from September 9, 2026.
 
 ---
 
@@ -303,15 +303,15 @@ Answer: The messages include CRON activity and sudo session messages. They are r
 
 Command:
 
-
+```
 $ grep "ssh" /etc/services | wc -l
-
+```
 
 Output:
 
-
+```
 1
-
+```
 
 Answer: 1 line was returned.
 
@@ -327,9 +327,9 @@ ssh        22/tcp        # SSH Remote Login Protocol
 
 Command:
 
-
+```
 $ find /etc -name "*.conf" -mtime -7
-
+```
 
 Answer: -mtime -7 restricts the results to files modified less than 7 days ago.
 
@@ -339,10 +339,10 @@ Answer: -mtime -7 restricts the results to files modified less than 7 days ago.
 
 Commands:
 
-
+```
 $ which ls
 $ which nano
-
+```
 
 Answer: These commands can be located with which. The output gives the executable's path, for example:
 
@@ -359,9 +359,9 @@ Answer: These commands can be located with which. The output gives the executabl
 
 Command:
 
-
+```
 $ history | tail -n 20
-
+```
 
 Answer: The pipe | sends the output of the command on its left (`history`) directly to the input of the command on its right (`tail`). This displays only the last 20 history entries.
 
@@ -371,10 +371,10 @@ Answer: The pipe | sends the output of the command on its left (`history`) direc
 
 Commands:
 
-
+```
 $ ls -la ~/cyber-course/ > ~/listing.txt
 $ date >> ~/listing.txt
-
+```
 
 Answer:
 
@@ -387,9 +387,9 @@ Answer:
 
 Command:
 
-
+```
 $ echo "hello cyber world" | grep "cyber"
-
+```
 
 Output:
 
@@ -407,12 +407,12 @@ Answer: echo produced the sentence and the pipe passed it to grep. Since the sen
 
 Commands:
 
-
+```
 $ mkdir ~/test-extract
 $ cd ~/test-extract
 $ unzip ~/cyber-course/unit1.zip
 $ ls -la
-
+```
 
 Answer: The extraction worked. The extracted directory contained unit1/, including the intro.txt file created earlier.
 
@@ -422,9 +422,9 @@ Answer: The extraction worked. The extracted directory contained unit1/, includi
 
 Command:
 
-
+```
 $ tar -czvf unit2.tar.gz unit2/
-
+```
 
 Answer:
 
@@ -443,16 +443,16 @@ Answer:
 
 Command:
 
-
+```
 $ touch ~/cyber-course/hello.sh
 $ ls -l ~/cyber-course/hello.sh
-
+```
 
 Output:
 
-
+```
 -rw-r--r-- 1 varia varia 0 Sep 5 13:25 /home/varia/cyber-course/hello.sh
-
+```
 
 Answer: The permission string is:
 
@@ -468,9 +468,9 @@ No, the owner cannot execute the file because the owner's permissions are only r
 
 Command:
 
-
+```
 $ ~/cyber-course/hello.sh
-
+```
 
 Answer: The script could not be executed because it did not have execute permission.
 
@@ -480,17 +480,17 @@ Answer: The script could not be executed because it did not have execute permiss
 
 Commands:
 
-
+```
 $ chmod u+x ~/cyber-course/hello.sh
 $ ls -l ~/cyber-course/hello.sh
 $ ~/cyber-course/hello.sh
-
+```
 
 Output:
 
-
+```
 -rwxr--r-- 1 varia varia 46 Sep 5 13:25 /home/varia/cyber-course/hello.sh
-
+```
 
 Script output:
 
@@ -506,15 +506,15 @@ Answer: The new permission string is -rwxr--r--. Yes, the script ran successfull
 
 Command:
 
-
+```
 $ chmod 700 ~/cyber-course/hello.sh
-
+```
 
 Output:
 
-
+```
 -rwx------ 1 varia varia 46 Sep 5 13:25 /home/varia/cyber-course/hello.sh
-
+```
 
 Answer: 700 means:
 
@@ -532,9 +532,9 @@ In other words, only the owner can read, modify, or execute the file.
 
 Command:
 
-
+```
 $ ps aux | head -n 10
-
+```
 
 Answer: The USER column shows the user account that owns or started each process.
 
@@ -544,9 +544,9 @@ Answer: The USER column shows the user account that owns or started each process
 
 Command:
 
-
+```
 $ du -sh ~/cyber-course/
-
+```
 
 Answer: The exact du -sh output was not captured in the provided session data, so the exact size of cyber-course cannot be reliably stated from the available evidence.
 
@@ -556,9 +556,9 @@ Answer: The exact du -sh output was not captured in the provided session data, s
 
 Command:
 
-
+```
 $ free -h
-
+```
 
 Answer: The exact free -h output was not captured in the provided session data, so the exact total and used RAM cannot be reliably stated.
 
@@ -570,9 +570,9 @@ Answer: The exact free -h output was not captured in the provided session data, 
 
 Command:
 
-
+```
 $ ip a
-
+```
 
 Answer: The ip a output was not included in the available session data, so the exact primary-interface IP address cannot be reliably stated.
 
@@ -582,10 +582,10 @@ Answer: The ip a output was not included in the available session data, so the e
 
 Commands:
 
-
+```
 $ ping -c 4 1.1.1.1
 $ ping -c 4 example.com
-
+```
 
 Answer: The actual ping output was not captured in the provided session data, so the success or failure of the two tests cannot be confirmed from the available evidence.
 
@@ -600,11 +600,11 @@ In general:
 
 Commands:
 
-
+```
 $ wget https://www.debian.org/index.html -O ~/cyber-course/debian.html
 $ curl https://www.debian.org/ -o ~/cyber-course/debian2.html
 $ diff ~/cyber-course/debian.html ~/cyber-course/debian2.html
-
+```
 
 Answer: The two downloaded files have the same size in the recorded directory listing:
 
@@ -623,9 +623,9 @@ However, the actual diff output was not captured. Therefore, identical file cont
 
 Command:
 
-
+```
 $ sudo apt update
-
+```
 
 Output:
 
@@ -646,16 +646,16 @@ Answer: sudo uses the password of the current user, varia, not the root password
 
 Commands:
 
-
+```
 $ apt list --upgradable
 $ sudo apt upgrade
-
+```
 
 Output:
 
-
+```
 firefox-esr/stable-security 140.15.0esr-1~deb13u1 arm64 [upgradable from: 140.14.0esr-1~deb13u1]
-
+```
 
 Upgrade summary:
 
@@ -675,17 +675,17 @@ Answer: Yes. 1 package was upgraded: firefox-esr, from version 140.14.0esr-1~deb
 
 Commands:
 
-
+```
 $ sudo apt install htop
 $ which htop
 $ htop
-
+```
 
 Output:
 
-
+```
 /usr/bin/htop
-
+```
 
 Answer: htop provides a more interactive and user-friendly process view. For example, it allows easier scrolling through processes and provides a clearer interactive interface for sorting and managing them.
 
@@ -695,16 +695,16 @@ Answer: htop provides a more interactive and user-friendly process view. For exa
 
 Command:
 
-
+```
 $ apt search nmap
-
+```
 
 Output:
 
-
+```
 nmap/stable 7.95+dfsg-3 arm64
   The Network Mapper
-
+```
 
 Answer: nmap is The Network Mapper, a network scanning and discovery tool.
 
@@ -718,7 +718,7 @@ Working directory: /home/varia
 
 Commands:
 
-
+```
 $ mkdir report
 $ hostname > ~/report/system-info.txt
 $ whoami >> ~/report/system-info.txt
@@ -727,11 +727,11 @@ $ df -h >> ~/report/system-info.txt
 $ date >> ~/report/system-info.txt
 $ zip -r report.zip report/
 $ unzip -l report.zip
-
+```
 
 Output from system-info.txt:
 
-
+```
 debian-lab
 varia
 Linux debian-lab 6.12.107+deb13-arm64 #1 SMP Debian 6.12.107-1 (2026-08-29) aarch64 GNU/Linux
@@ -746,8 +746,8 @@ tmpfs           5.0M   8.0K  5.0M   1% /run/lock
 tmpfs           984M    20K  984M   1% /tmp
 /dev/vda2       977M  9.6M  968M   1% /boot/efi
 tmpfs           1.0M   104K  197M   1% /run/user/1000
-Sat Sep  5 02:05:50 PM EEST 2026
-
+Sat Sep  8 02:05:50 PM EEST 2026
+```
 
 Zip verification:
 
