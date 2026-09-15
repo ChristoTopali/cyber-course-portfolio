@@ -1,0 +1,772 @@
+# Linux CLI Basics Assignment
+
+Date: 2026-09-5
+
+Source: Linux CLI Basics
+
+Environment: Debian VM
+
+## Goal
+To become comfortable with the essential Linux command-line tools I will use throughout this course and build the muscle memory for navigation, file manipulation, viewing, searching, redirection, and package management on Debian 13.
+
+## Part 1 Getting your bearings
+
+### Q1 — What username are you logged in as?
+
+Command:
+
+
+$ whoami
+
+
+Output:
+
+
+varia
+
+
+Answer: I am logged in as the user varia.
+
+---
+
+### Q2 — Are you a member of the sudo group? How can you tell from the output of id?
+
+Command:
+
+
+$ id
+
+
+Output:
+
+
+uid=1000(varia) gid=1000(varia) groups=1000(varia),27(sudo)
+
+
+Answer: Yes. I am a member of the sudo group because sudo appears in the list of groups.
+
+---
+
+### Q3 — What kernel version is your system running?
+
+Command:
+
+
+$ uname -a
+
+
+Output:
+
+
+Linux debian-lab 6.12.107+deb13-arm64 #1 SMP Debian 6.12.107-1 (2026-08-29) aarch64 GNU/Linux
+
+
+Answer: The system is running Linux kernel 6.12.107+deb13-arm64.
+
+---
+
+### Q4 — What is the difference in the depth of information they give you?
+
+Commands:
+
+
+$ whatis whoami
+$ man whoami
+
+
+Output from whatis:
+
+
+whoami (1) - print effective user name
+
+
+Answer: whatis gives a very short, one-line description of the command. man provides a much more detailed manual page, including the command's purpose, syntax, description, options, and other information.
+
+---
+
+### Q5 — While in man, how do you (a) search for the word "user" and (b) quit?
+
+Answer:
+
+* To search for user, press /, type user, and press Enter.
+* To quit man, press q.
+
+---
+
+## Part 2 Navigation
+
+### Q6 — What did cd - do?
+
+Commands:
+
+
+$ cd /etc
+$ pwd
+$ cd ..
+$ pwd
+$ cd /var/log
+$ pwd
+$ cd -
+$ pwd
+
+
+Answer: cd - switches back to the previous working directory. It is useful for quickly moving between the current directory and the directory visited immediately before it.
+
+---
+
+### Q7 — What additional information does -l give you over plain ls?
+
+Command:
+
+
+$ ls -l /etc
+
+
+Output (excerpt):
+
+
+-rw-r--r--  1 root root  3028 Mar 12 09:14 adduser.conf
+drwxr-xr-x  2 root root  4096 Oct 21 14:02 apt
+
+
+Answer: -l shows the long format — permissions, link count, owner, group, size, modification date, and name.
+
+---
+
+### Q8 — What does -a show that wasn't visible before? Name two examples from the output.
+
+Command:
+
+
+$ ls -la /etc
+
+
+Answer: -a shows hidden files and directories that are normally omitted by ls.
+
+Examples include:
+
+
+.
+..
+
+
+---
+
+### Q9 — What is the largest file in /var/log? What size is it?
+
+Command:
+
+
+$ ls -lh /var/log
+
+
+Output:
+
+
+-rw-r--r--  1 root root 786K Sep  5 13:57 dpkg.log
+
+
+Answer: The largest regular file shown in /var/log is dpkg.log, with a size of approximately 786K.
+
+---
+
+### Q10 — What was modified most recently?
+
+Command:
+
+
+$ ls -lt /var/log
+
+
+Output (top entries):
+
+
+-rw-r--r--  1 root root 804285 Sep  5 13:57 dpkg.log
+drwxr-xr-x  2 root root   4096 Sep  5 13:57 apt
+-rw-r--r--  1 root root  46882 Sep  5 13:57 alternatives.log
+
+
+Answer: The most recently modified items were dpkg.log, the apt directory, and alternatives.log, all modified at 13:57 on September 5.
+
+-—
+
+## Part 3 Creating and managing files
+
+### Q11 — Show the command (or commands) you used.
+
+Command:
+
+
+$ mkdir -p ~/cyber-course/unit1
+$ mkdir -p ~/cyber-course/unit2
+$ mkdir -p ~/cyber-course/unit3/osint
+$ mkdir -p ~/cyber-course/unit3/recon
+$ mkdir -p ~/cyber-course/unit3/crypto
+$ mkdir -p ~/cyber-course/scratch
+
+
+Answer: The directory structure was created under ~/cyber-course/, including unit1, unit2, unit3/osint, unit3/recon, unit3/crypto, and scratch.
+
+---
+
+### Q12 — What key combination did you use to save? What key combination did you use to exit?
+
+Answer:
+
+* Save: Ctrl+O, then Enter
+* Exit: Ctrl+X
+
+---
+
+### Q13 — Why did rmdir fail (or succeed)?
+
+Command:
+
+
+$ rmdir ~/cyber-course/scratch/
+
+
+Answer: rmdir fails when the directory is not empty. In this task, scratch/ contained files, so it could not be removed with rmdir.
+
+The directory was then removed with:
+
+
+$ rm -r ~/cyber-course/scratch/
+
+
+---
+
+## Part 4 Viewing files
+
+### Q14 — Which Debian version do you have?
+
+Command:
+
+
+$ cat /etc/os-release
+
+
+Output:
+
+
+PRETTY_NAME="Debian GNU/Linux 13 (trixie)"
+NAME="Debian GNU/Linux"
+VERSION_ID="13"
+VERSION="13 (trixie)"
+DEBIAN_VERSION_FULL=13.6
+ID=debian
+
+
+Answer: The system is running Debian GNU/Linux 13 (trixie).
+
+---
+
+### Q15 — What kind of messages do you see? Are they recent?
+
+Command:
+
+
+$ sudo tail -n 10 /var/log/syslog
+
+
+Output:
+
+
+tail: cannot open '/var/log/syslog' for reading: No such file or directory
+
+
+Answer: No messages could be displayed because /var/log/syslog does not exist on this system.
+
+The system uses the systemd journal instead. The equivalent command was:
+
+
+$ sudo journalctl -n 10
+
+
+Output (excerpt):
+
+
+Sep 05 14:17:01 debian-lab CRON[3826]: (root) CMD ...
+Sep 05 14:17:35 debian-lab sudo[3828]: varia : TTY=pts/0 ...
+Sep 05 14:18:13 debian-lab sudo[3835]: varia : TTY=pts/0 ...
+Sep 05 14:18:49 debian-lab sudo[3842]: varia : TTY=pts/0 ...
+
+
+Answer: The messages include CRON activity and sudo session messages. They are recent, from September 5, 2026.
+
+---
+
+## Part 5 Searching
+
+### Q16 — How many lines were returned? (Hint: pipe to wc -l.)
+
+Command:
+
+
+$ grep "ssh" /etc/services | wc -l
+
+
+Output:
+
+
+1
+
+
+Answer: 1 line was returned.
+
+The matching entry was:
+
+
+ssh        22/tcp        # SSH Remote Login Protocol
+
+
+---
+
+### Q17 — How would you modify the command to show only .conf files modified in the last 7 days?
+
+Command:
+
+
+$ find /etc -name "*.conf" -mtime -7
+
+
+Answer: -mtime -7 restricts the results to files modified less than 7 days ago.
+
+---
+
+### Q18 — Where are these commands actually located on the filesystem?
+
+Commands:
+
+
+$ which ls
+$ which nano
+
+
+Answer: These commands can be located with which. The output gives the executable's path, for example:
+
+
+/usr/bin/ls
+/usr/bin/nano
+
+
+---
+
+## Part 6 History, redirection, and pipes
+
+### Q19 — What does the | symbol do here?
+
+Command:
+
+
+$ history | tail -n 20
+
+
+Answer: The pipe | sends the output of the command on its left (`history`) directly to the input of the command on its right (`tail`). This displays only the last 20 history entries.
+
+---
+
+### Q20 — What is the difference between > and >>?
+
+Commands:
+
+
+$ ls -la ~/cyber-course/ > ~/listing.txt
+$ date >> ~/listing.txt
+
+
+Answer:
+
+* > creates or overwrites a file with the command output.
+* >> appends the output to the end of an existing file without deleting its previous contents.
+
+---
+
+### Q21 — What was the output, and why?
+
+Command:
+
+
+$ echo "hello cyber world" | grep "cyber"
+
+
+Output:
+
+
+hello cyber world
+
+
+Answer: echo produced the sentence and the pipe passed it to grep. Since the sentence contains the word cyber, grep printed the entire matching line.
+
+---
+
+## Part 7 Archives
+
+### Q22 — Confirm with ls -la that the extraction worked. What did you find inside?
+
+Commands:
+
+
+$ mkdir ~/test-extract
+$ cd ~/test-extract
+$ unzip ~/cyber-course/unit1.zip
+$ ls -la
+
+
+Answer: The extraction worked. The extracted directory contained unit1/, including the intro.txt file created earlier.
+
+---
+
+### Q23 — What do the flags c, z, v, and f each mean?
+
+Command:
+
+
+$ tar -czvf unit2.tar.gz unit2/
+
+
+Answer:
+
+| Flag | Meaning                       |
+| ---- | ----------------------------- |
+| c  | Create a new archive          |
+| z  | Compress using gzip           |
+| v  | Verbose output                |
+| f  | Specify the archive file name |
+
+---
+
+## Part 8 Permissions
+
+### Q24 — Paste the permission string. Can the owner execute the file?
+
+Command:
+
+
+$ touch ~/cyber-course/hello.sh
+$ ls -l ~/cyber-course/hello.sh
+
+
+Output:
+
+
+-rw-r--r-- 1 varia varia 0 Sep 5 13:25 /home/varia/cyber-course/hello.sh
+
+
+Answer: The permission string is:
+
+
+-rw-r--r--
+
+
+No, the owner cannot execute the file because the owner's permissions are only rw-. There is no x permission.
+
+---
+
+### Q25 — What happened, and why?
+
+Command:
+
+
+$ ~/cyber-course/hello.sh
+
+
+Answer: The script could not be executed because it did not have execute permission.
+
+---
+
+### Q26 — What does the new permission string look like? Did the script run this time?
+
+Commands:
+
+
+$ chmod u+x ~/cyber-course/hello.sh
+$ ls -l ~/cyber-course/hello.sh
+$ ~/cyber-course/hello.sh
+
+
+Output:
+
+
+-rwxr--r-- 1 varia varia 46 Sep 5 13:25 /home/varia/cyber-course/hello.sh
+
+
+Script output:
+
+
+Hello from my first script
+
+
+Answer: The new permission string is -rwxr--r--. Yes, the script ran successfully because the owner now has execute permission.
+
+---
+
+### Q27 — What does 700 mean in plain language?
+
+Command:
+
+
+$ chmod 700 ~/cyber-course/hello.sh
+
+
+Output:
+
+
+-rwx------ 1 varia varia 46 Sep 5 13:25 /home/varia/cyber-course/hello.sh
+
+
+Answer: 700 means:
+
+* Owner: read, write, execute
+* Group: no permissions
+* Others: no permissions
+
+In other words, only the owner can read, modify, or execute the file.
+
+-—
+
+## Part 9 Processes and system info
+
+### Q28 — What does the USER column show?
+
+Command:
+
+
+$ ps aux | head -n 10
+
+
+Answer: The USER column shows the user account that owns or started each process.
+
+---
+
+### Q29 — How much disk space is your cyber-course directory using?
+
+Command:
+
+
+$ du -sh ~/cyber-course/
+
+
+Answer: The exact du -sh output was not captured in the provided session data, so the exact size of cyber-course cannot be reliably stated from the available evidence.
+
+---
+
+### Q30 — How much RAM does your VM have, and how much is currently used?
+
+Command:
+
+
+$ free -h
+
+
+Answer: The exact free -h output was not captured in the provided session data, so the exact total and used RAM cannot be reliably stated.
+
+---
+
+## Part 10 Networking and downloads
+
+### Q31 — What is your VM's IP address on the primary interface?
+
+Command:
+
+
+$ ip a
+
+
+Answer: The ip a output was not included in the available session data, so the exact primary-interface IP address cannot be reliably stated.
+
+---
+
+### Q32 — Did both succeed? If one failed, what is the most likely reason?
+
+Commands:
+
+
+$ ping -c 4 1.1.1.1
+$ ping -c 4 example.com
+
+
+Answer: The actual ping output was not captured in the provided session data, so the success or failure of the two tests cannot be confirmed from the available evidence.
+
+In general:
+
+* If 1.1.1.1 works but example.com fails, the likely problem is DNS resolution.
+* If both fail, the likely problem is network connectivity or routing.
+
+---
+
+### Q33 — Are the two files identical?
+
+Commands:
+
+
+$ wget https://www.debian.org/index.html -O ~/cyber-course/debian.html
+$ curl https://www.debian.org/ -o ~/cyber-course/debian2.html
+$ diff ~/cyber-course/debian.html ~/cyber-course/debian2.html
+
+
+Answer: The two downloaded files have the same size in the recorded directory listing:
+
+
+debian.html   15856 bytes
+debian2.html  15856 bytes
+
+
+However, the actual diff output was not captured. Therefore, identical file contents cannot be conclusively confirmed from the available evidence based only on file size.
+
+---
+
+## Part 11 Package management and sudo
+
+### Q34 — Did sudo ask for a password? Whose password?
+
+Command:
+
+
+$ sudo apt update
+
+
+Output:
+
+```
+Hit:1 http://deb.debian.org/debian trixie InRelease
+Hit:2 http://security.debian.org/debian-security trixie-security InRelease
+Hit:3 http://deb.debian.org/debian trixie-updates InRelease
+1 package can be upgraded.
+```
+-—
+
+
+Answer: sudo uses the password of the current user, varia, not the root password. In the recorded apt update output, no password prompt was shown, which indicates that the existing sudo authentication was still valid.
+
+---
+
+### Q35 — Were any packages upgraded? Roughly how many?
+
+Commands:
+
+
+$ apt list --upgradable
+$ sudo apt upgrade
+
+
+Output:
+
+
+firefox-esr/stable-security 140.15.0esr-1~deb13u1 arm64 [upgradable from: 140.14.0esr-1~deb13u1]
+
+
+Upgrade summary:
+
+
+Upgrading:
+  firefox-esr
+
+Summary:
+  Upgrading: 1, Installing: 0, Removing: 0, Not Upgrading: 0
+
+
+Answer: Yes. 1 package was upgraded: firefox-esr, from version 140.14.0esr-1~deb13u1 to 140.15.0esr-1~deb13u1.
+
+---
+
+### Q36 — What's one thing htop shows you that top did not?
+
+Commands:
+
+
+$ sudo apt install htop
+$ which htop
+$ htop
+
+
+Output:
+
+
+/usr/bin/htop
+
+
+Answer: htop provides a more interactive and user-friendly process view. For example, it allows easier scrolling through processes and provides a clearer interactive interface for sorting and managing them.
+
+---
+
+### Q37 — What is nmap, according to the description?
+
+Command:
+
+
+$ apt search nmap
+
+
+Output:
+
+
+nmap/stable 7.95+dfsg-3 arm64
+  The Network Mapper
+
+
+Answer: nmap is The Network Mapper, a network scanning and discovery tool.
+
+---
+
+## Part 12 Putting it together
+
+### Q38 — Paste the commands you used. The output redirection (`>` and `>>`) is the key here.
+
+Working directory: /home/varia
+
+Commands:
+
+
+$ mkdir report
+$ hostname > ~/report/system-info.txt
+$ whoami >> ~/report/system-info.txt
+$ uname -a >> ~/report/system-info.txt
+$ df -h >> ~/report/system-info.txt
+$ date >> ~/report/system-info.txt
+$ zip -r report.zip report/
+$ unzip -l report.zip
+
+
+Output from system-info.txt:
+
+
+debian-lab
+varia
+Linux debian-lab 6.12.107+deb13-arm64 #1 SMP Debian 6.12.107-1 (2026-08-29) aarch64 GNU/Linux
+Filesystem      Size  Used Avail Use% Mounted on
+udev            926M     0  926M   0% /dev
+tmpfs           197M  1.5M  196M   1% /run
+/dev/vda3        27G  5.4G   21G  22% /
+tmpfs           984M   12K  984M   1% /dev/shm
+efivarfs        256K   16K  241K   7% /sys/firmware/efi/efivars
+tmpfs           1.0M     0  1.0M   0% /run/credentials/systemd-journald.service
+tmpfs           5.0M   8.0K  5.0M   1% /run/lock
+tmpfs           984M    20K  984M   1% /tmp
+/dev/vda2       977M  9.6M  968M   1% /boot/efi
+tmpfs           1.0M   104K  197M   1% /run/user/1000
+Sat Sep  5 02:05:50 PM EEST 2026
+
+
+Zip verification:
+
+
+Archive:  report.zip
+  Length      Date    Time    Name
+---------  ---------- -----   ----
+        0  2026-09-05 14:04   report/
+      786  2026-09-05 14:06   report/system-info.txt
+---------                     -------
+      786                     2 files
+
+
+Answer: The > operator was used for the first command to create system-info.txt, while >> was used to append the remaining command outputs to the same file. The report/ directory was then compressed into report.zip and verified with unzip -l.
+
+
+## Reflection (150–200 words):
+
+- Which command surprised you (positively or negatively)?
+- Which command will you use most often, and why?
+- What one thing about the Linux CLI is still confusing?
+
+The command that surprised me most was find. It can search many files and folders very quickly. I also liked grep because it makes it easy to find specific text in files.
