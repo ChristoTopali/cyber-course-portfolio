@@ -31,17 +31,18 @@ Answer: I am logged in as the user varia.
 
 ### Q2 — Are you a member of the sudo group? How can you tell from the output of id?
 
+
 Command:
 
-
+```
 $ id
-
+```
 
 Output:
 
-
+```
 uid=1000(varia) gid=1000(varia) groups=1000(varia),27(sudo)
-
+```
 
 Answer: Yes. I am a member of the sudo group because sudo appears in the list of groups.
 
