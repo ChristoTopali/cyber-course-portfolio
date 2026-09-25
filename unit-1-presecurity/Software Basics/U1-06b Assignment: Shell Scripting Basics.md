@@ -280,7 +280,7 @@ The script caught the empty `$dirname` variable in the conditional check `[ -z "
 
 ### Q19: Modification choice & output
 
-I selected **Option A** (Ask how many files). The modified script prompts the user for both the directory name and the desired file count, validating both inputs before running a dynamic `seq` loop.
+I selected **Option A**. The modified script prompts the user for both the directory name and the desired file count, validating both inputs before running a dynamic `seq` loop.
 
 **Modified `make-files.sh` output test:**
 
